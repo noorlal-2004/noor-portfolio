@@ -21,7 +21,7 @@
       color:var(--text);
     }
 
-    /* Sidebar */
+    /* Sidebar / Topbar */
     .sidebar {
       width:220px;
       background:var(--bg);
@@ -65,8 +65,13 @@
       color:var(--accent);
       font-weight:700;
     }
+    .sidebar-footer {
+      display:flex;
+      gap:.8rem;
+      flex-wrap:wrap;
+      margin-top:1rem;
+    }
     .sidebar-footer a {
-      margin-right:.6rem;
       color:var(--text);
       text-decoration:none;
       font-size:1.2rem;
@@ -128,14 +133,17 @@
       justify-content:center;
       align-items:center;
       z-index:1000;
+      padding:1rem;
     }
     .modal-content {
       background:#fff;
       border-radius:12px;
       max-width:800px;
-      width:90%;
+      width:100%;
       padding:1rem;
       position:relative;
+      overflow-y:auto;
+      max-height:90vh;
     }
     .modal-content h3 {
       margin:1rem 0;
@@ -200,14 +208,41 @@
       cursor:pointer;
     }
 
+    /* Responsive tweaks */
+    @media(max-width:992px){
+      .project-card img {height:150px;}
+      .section h2 {font-size:1.6rem;}
+    }
     @media(max-width:768px){
-      .sidebar {position:relative; width:100%; flex-direction:row; border-right:none; border-bottom:1px solid #eee;}
+      body {flex-direction:column;}
+      .sidebar {
+        position:relative;
+        width:100%;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        padding:1rem;
+        border-right:none;
+        border-bottom:1px solid #eee;
+      }
+      .nav {
+        display:flex;
+        gap:1rem;
+      }
+      .nav a {padding:.3rem;}
       .main {margin-left:0; padding:1rem;}
+    }
+    @media(max-width:480px){
+      .nav {flex-direction:column; align-items:flex-start; gap:.5rem;}
+      .project-grid {grid-template-columns:1fr;}
+      .sidebar-footer {justify-content:center;}
+      .logo {font-size:1.2rem;}
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
+  <!-- Sidebar / Topbar -->
   <aside class="sidebar">
     <div>
       <div class="logo">Noor.</div>
@@ -225,6 +260,7 @@
     </div>
   </aside>
 
+  <!-- Main -->
   <main class="main">
     <section class="section">
       <h2>My Projects</h2>
@@ -249,7 +285,7 @@
     </section>
   </main>
 
-  <!-- ReFood Modal -->
+  <!-- Modals -->
   <div class="modal" id="modal0">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal(0)">&times;</span>
@@ -266,11 +302,10 @@
           <button onclick="nextSlide(0)">&#10095;</button>
         </div>
       </div>
-      <p>A React Native + Firebase app with AI recipe recommendation, expiry alerts, donation centers, and multi-role access (admin, donor, recipient, center).</p>
+      <p>A React Native + Firebase app with AI recipe recommendation, expiry alerts, donation centers, and multi-role access.</p>
     </div>
   </div>
 
-  <!-- NutriLens Modal -->
   <div class="modal" id="modal1">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal(1)">&times;</span>
@@ -287,11 +322,10 @@
           <button onclick="nextSlide(1)">&#10095;</button>
         </div>
       </div>
-      <p>A calorie counting app integrated with TensorFlow. Uses camera image recognition for calorie detection, daily graphs, and portion recommendations.</p>
+      <p>A calorie counting app integrated with TensorFlow, using image recognition for calorie detection and daily graphs.</p>
     </div>
   </div>
 
-  <!-- Portfolio Website Modal -->
   <div class="modal" id="modal2">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal(2)">&times;</span>
@@ -307,11 +341,10 @@
           <button onclick="nextSlide(2)">&#10095;</button>
         </div>
       </div>
-      <p>A personal portfolio built with HTML and CSS. Showcases my skills, projects, and contact information in a modern responsive design.</p>
+      <p>A personal portfolio built with HTML and CSS, showcasing skills, projects, and contact information.</p>
     </div>
   </div>
 
-  <!-- Noor Novels Website Modal -->
   <div class="modal" id="modal3">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal(3)">&times;</span>
@@ -326,12 +359,12 @@
           <button onclick="nextSlide(3)">&#10095;</button>
         </div>
       </div>
-      <p>A vintage-style Urdu novels website built with PHP, MySQL, JavaScript, and Bootstrap. Includes a sidebar, navbar, search functionality, writers’ pages, and database-driven novel categories.</p>
+      <p>A vintage-style Urdu novels website built with PHP, MySQL, and Bootstrap. Includes sidebar, search, and novel categories.</p>
     </div>
   </div>
 
   <script>
-    let currentIndex = [0,0,0,0]; // four modals
+    let currentIndex = [0,0,0,0];
 
     function openModal(id){
       document.getElementById('modal'+id).style.display='flex';
@@ -341,7 +374,6 @@
       currentIndex[id]=0;
       updateCarousel(id);
     }
-
     function nextSlide(id){
       const items = document.querySelectorAll(`#carousel${id} .carousel-item`);
       currentIndex[id] = (currentIndex[id]+1) % items.length;
