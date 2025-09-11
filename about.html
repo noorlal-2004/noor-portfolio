@@ -35,6 +35,7 @@
       top:0;
       left:0;
       bottom:0;
+      transition: transform 0.3s ease;
     }
     .logo{
       font-size:1.6rem;
@@ -79,6 +80,16 @@
     }
     .sidebar-footer a:hover{
       color:var(--accent);
+    }
+
+    /* Hamburger (hidden on desktop) */
+    .hamburger {
+      display: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--accent);
     }
 
     /* Main Content */
@@ -209,6 +220,38 @@
       color:var(--muted);
     }
 
+    /* Responsive */
+    @media(max-width:768px){
+      body{flex-direction:column;}
+      .sidebar{
+        width:100%;
+        height:auto;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        padding:1rem;
+        border-right:none;
+        border-bottom:1px solid #eee;
+        position:relative;
+      }
+      .nav {
+        display: none;
+        flex-direction:column;
+        gap:.5rem;
+        margin-top:1rem;
+      }
+      .nav.show {
+        display:flex;
+      }
+      .main{
+        margin-left:0;
+        padding:1rem;
+      }
+      .hamburger {
+        display:block;
+      }
+    }
+
     /* Animations */
     @keyframes fadeIn {
       from {opacity:0; transform:translateY(15px);}
@@ -223,15 +266,14 @@
 </head>
 <body>
   <aside class="sidebar">
-    <div>
-      <div class="logo">Noor.</div>
-      <nav class="nav">
-        <a href="index.htm">Home</a>
-        <a href="about.html" class="active">About</a>
-        <a href="project.html">Works</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
+    <div class="logo">Noor.</div>
+    <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="project.html">Works</a>
+      <a href="contact.html">Contact</a>
+    </nav>
     <div class="sidebar-footer">
       <a href="mailto:noorlal2004@gmail.com"><i class="fas fa-envelope"></i></a>
       <a href="https://linkedin.com/in/noor-lal-4114a32b6"><i class="fab fa-linkedin"></i></a>
@@ -294,44 +336,44 @@
     <section class="section" id="certifications">
       <h2>Certifications</h2>
       <div class="certifications">
-
         <div class="cert-card">
           <a href="src/certificate1.png" target="_blank">
             <img src="src/certificate1.png" alt="Certificate 1">
           </a>
           <p>Introduction to Basic Game Development using Scratch – Coursera</p>
         </div>
-
         <div class="cert-card">
           <a href="src/certificate2.png" target="_blank">
             <img src="src/certificate2.png" alt="Certificate 2">
           </a>
           <p>Python Pandas Basic Course – Simplilearn</p>
         </div>
-
         <div class="cert-card">
           <a href="src/certificate3.png" target="_blank">
             <img src="src/certificate3.png" alt="Certificate 3">
           </a>
           <p>AWS S3 Basic – Coursera</p>
         </div>
-
         <div class="cert-card">
           <a href="src/certificate4.png" target="_blank">
             <img src="src/certificate4.png" alt="Certificate 4">
           </a>
           <p>Create your first python program from UST – Coursera</p>
         </div>
-
         <div class="cert-card">
           <a href="src/certificate5.png" target="_blank">
             <img src="src/certificate5.png" alt="Certificate 5">
           </a>
           <p>Create a no-code responsive website with Webflow – Coursera</p>
         </div>
-
       </div>
     </section>
   </main>
+
+  <script>
+    function toggleMenu(){
+      document.querySelector('.nav').classList.toggle('show');
+    }
+  </script>
 </body>
 </html>
